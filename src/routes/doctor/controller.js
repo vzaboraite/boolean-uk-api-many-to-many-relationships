@@ -49,4 +49,39 @@ const getDoctorWithAppointments = async (req, res) => {
   }
 };
 
-module.exports = { getAll, getDoctorWithAppointments };
+const getPracticesOfDoctorAppointments = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const data = await prisma.doctor.findUnique({
+      where: {
+        id: parseInt(id),
+      },
+      include: {
+        appointments: {
+          include: {
+            appointment: true,
+          },
+        },
+      },
+    });
+
+    const practices = data.appointments.map(
+      (appointment) => appointment.appointment.practiceName
+    );
+
+    const uniquePractices = [...new Set(practices)];
+
+    res.json({ data: uniquePractices });
+  } catch (error) {
+    console.error({ error: error.message });
+
+    res.status(500).json({ error: error.message });
+  }
+};
+
+module.exports = {
+  getAll,
+  getDoctorWithAppointments,
+  getPracticesOfDoctorAppointments,
+};
