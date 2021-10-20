@@ -1,4 +1,3 @@
-const { appointmentsOnDoctors } = require("../../utils/db");
 const prisma = require("../../utils/db");
 
 /* READ Controllers */
