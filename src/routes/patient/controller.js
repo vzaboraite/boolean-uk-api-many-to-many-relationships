@@ -1,5 +1,29 @@
 const prisma = require("../../utils/db");
 
+/* CREATE Controllers */
+
+const createOne = async (req, res) => {
+  const { firstName, lastName, dateOfBirth } = req.body;
+
+  try {
+    const data = await prisma.patient.create({
+      data: {
+        firstName,
+        lastName,
+        dateOfBirth: new Date(dateOfBirth),
+      },
+    });
+
+    res.json({ data });
+  } catch (error) {
+    console.error({ error: error.message });
+
+    res.json({ error: error.message });
+  }
+};
+
+/* READ Controllers */
+
 const getAll = async (req, res) => {
   try {
     const data = await prisma.patient.findMany();
@@ -12,4 +36,4 @@ const getAll = async (req, res) => {
   }
 };
 
-module.exports = { getAll };
+module.exports = { getAll, createOne };
