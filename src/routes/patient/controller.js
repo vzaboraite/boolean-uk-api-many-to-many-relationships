@@ -18,7 +18,7 @@ const createOne = async (req, res) => {
   } catch (error) {
     console.error({ error: error.message });
 
-    res.json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
@@ -32,7 +32,7 @@ const getAll = async (req, res) => {
   } catch (error) {
     console.error({ error: error.message });
 
-    res.json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };
 
