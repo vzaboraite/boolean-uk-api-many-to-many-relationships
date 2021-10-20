@@ -1,11 +1,8 @@
 const express = require("express");
+const { getAll } = require("./controller");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  console.log("Working!!!");
-
-  res.json({ doctor: true });
-});
+router.get("/", getAll);
 
 module.exports = router;
