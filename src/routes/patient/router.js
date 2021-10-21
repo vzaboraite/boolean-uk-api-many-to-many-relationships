@@ -1,10 +1,10 @@
 const express = require("express");
-const { getAll, createOne } = require("./controller");
+const { getAll, createPatientWithAppointment } = require("./controller");
 
 const router = express.Router();
 
 router.get("/", getAll);
 
-router.post("/", createOne);
+router.post("/", createPatientWithAppointment);
 
 module.exports = router;

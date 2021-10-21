@@ -2,8 +2,9 @@ const prisma = require("../../utils/db");
 
 /* CREATE Controllers */
 
-const createOne = async (req, res) => {
-  const { firstName, lastName, dateOfBirth } = req.body;
+const createPatientWithAppointment = async (req, res) => {
+  const { firstName, lastName, dateOfBirth, appointment } = req.body;
+  const { practiceName, reason, dateTime } = appointment;
 
   try {
     const data = await prisma.patient.create({
@@ -11,6 +12,18 @@ const createOne = async (req, res) => {
         firstName,
         lastName,
         dateOfBirth: new Date(dateOfBirth),
+        appointments: {
+          create: [
+            {
+              practiceName,
+              reason,
+              dateTime: new Date(dateTime),
+            },
+          ],
+        },
+      },
+      include: {
+        appointments: true,
       },
     });
 
@@ -36,4 +49,4 @@ const getAll = async (req, res) => {
   }
 };
 
-module.exports = { getAll, createOne };
+module.exports = { getAll, createPatientWithAppointment };
