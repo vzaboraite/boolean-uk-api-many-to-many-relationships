@@ -14,7 +14,7 @@ const getAll = async (req, res) => {
   }
 };
 
-const getDoctorWithAppointments = async (req, res) => {
+const getAppointmentsForDoctor = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -35,12 +35,7 @@ const getDoctorWithAppointments = async (req, res) => {
       (appointment) => appointment.appointment
     );
 
-    const result = {
-      ...data,
-      appointments: cleanedAppointments,
-    };
-
-    res.json({ data: result });
+    res.json({ data: cleanedAppointments });
   } catch (error) {
     console.error({ error: error.message });
 
@@ -81,6 +76,6 @@ const getPracticesOfDoctorAppointments = async (req, res) => {
 
 module.exports = {
   getAll,
-  getDoctorWithAppointments,
+  getAppointmentsForDoctor,
   getPracticesOfDoctorAppointments,
 };
